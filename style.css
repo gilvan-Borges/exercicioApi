@@ -40,7 +40,8 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.02; let
 
 /* loader */
 .loader { position: fixed; inset: 0; z-index: 100; background: var(--bg); display: grid; place-items: center; }
-.loader-inner { text-align: center; overflow: hidden; }
+.loader-mark { position: absolute; top: 50%; left: 50%; width: min(86vw, 640px); height: min(86vw, 640px); opacity: .14; pointer-events: none; }
+.loader-inner { position: relative; text-align: center; overflow: hidden; }
 .loader-word { font-family: var(--serif); font-size: clamp(2.4rem, 8vw, 5rem); font-style: italic; display: block; }
 .loader-bar { display: block; width: 180px; height: 2px; margin: 18px auto 0; background: var(--line); }
 .loader-bar i { display: block; height: 100%; width: 0; background: var(--pink); }

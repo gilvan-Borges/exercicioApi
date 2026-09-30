@@ -53,9 +53,12 @@ if (!window.gsap || reduce) {
   gsap.set(".hero .split .w > span, .cta .split .w > span", { yPercent: 115 });
 
   // --- Loader + intro ---
+  gsap.set(".loader-mark", { xPercent: -50, yPercent: -28 });
+  gsap.fromTo(".loader-mark", { scale: 0.85, rotation: -8, opacity: 0 }, { scale: 1, rotation: 0, opacity: 0.14, duration: 1.6, ease: "power3.out" });
   const intro = gsap.timeline();
   intro
     .to(".loader-bar i", { width: "100%", duration: 1.1, ease: "power2.inOut" })
+    .to(".loader-mark", { scale: 1.15, opacity: 0, duration: 0.7, ease: "power2.in" }, "+=0.1")
     .to(".loader-word", { yPercent: -120, duration: 0.6, ease: "power3.in" }, "+=0.1")
     .to(loader, { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "-=0.2")
     .set(loader, { display: "none" })
