@@ -347,3 +347,26 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10
   .fab { right: 14px; bottom: 14px; width: 56px; height: 56px; }
 }
 @media (prefers-reduced-motion: reduce) { .fab::after { animation: none; } }
+
+/* calendário personalizado */
+.campo { position: relative; }
+.date-btn { display: flex; justify-content: space-between; align-items: center; gap: 10px; width: 100%; font: inherit; font-size: 1rem; letter-spacing: 0; text-transform: none; text-align: left; color: var(--muted); background: rgba(255, 255, 255, .04); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; cursor: pointer; transition: border-color .25s; }
+.date-btn:hover, .date-btn[aria-expanded="true"] { border-color: var(--pink); }
+.date-btn.preenchido { color: var(--ink); }
+.date-btn svg { flex: none; color: var(--pink); }
+.cal { margin-top: 8px; padding: 16px; border: 1px solid var(--line); border-radius: 18px; background: #352a23; box-shadow: 0 24px 50px -20px rgba(0, 0, 0, .7); text-transform: none; letter-spacing: 0; color: var(--ink); }
+.cal[hidden] { display: none; }
+.cal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.cal-head strong { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; text-transform: capitalize; }
+.cal-nav { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: 1.4rem; line-height: 1; cursor: pointer; transition: background .2s, color .2s; }
+.cal-nav:hover:not(:disabled) { background: var(--pink); color: #2a1f18; }
+.cal-nav:disabled { opacity: .3; cursor: default; }
+.cal-sem, .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+.cal-sem span { font-size: .7rem; letter-spacing: .15em; color: var(--gold); padding: 6px 0; }
+.dia { aspect-ratio: 1; border: 0; border-radius: 50%; background: transparent; color: var(--ink); font: inherit; font-size: .95rem; cursor: pointer; transition: background .2s, color .2s, transform .15s; }
+.dia:hover:not(:disabled) { background: rgba(212, 176, 122, .22); transform: scale(1.08); }
+.dia.hoje { box-shadow: inset 0 0 0 1px var(--pink); }
+.dia.sel { background: var(--pink); color: #2a1f18; font-weight: 700; }
+.dia:disabled { opacity: .25; cursor: default; }
+.cal-limpar { margin-top: 10px; width: 100%; padding: 8px; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: .8rem; cursor: pointer; }
+.cal-limpar:hover { color: var(--gold); }

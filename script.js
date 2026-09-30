@@ -126,6 +126,54 @@ $("#enviar").addEventListener("click", () => {
 atualizaResumo();
 
 /* ==========================================================
+   CALENDÁRIO PERSONALIZADO (data do evento)
+   ========================================================== */
+(function () {
+  const btn = $("#cDataBtn"), pop = $("#cal"), grid = $("#calGrid"), titulo = $("#calTitulo"), campo = $("#cData"), txt = $("#cDataTxt");
+  const meses = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+  const dias = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
+  const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  let ano = hoje.getFullYear(), mes = hoje.getMonth();
+  const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
+  function desenha() {
+    titulo.textContent = `${meses[mes]} ${ano}`;
+    const primeiro = new Date(ano, mes, 1).getDay(), total = new Date(ano, mes + 1, 0).getDate();
+    let html = "";
+    for (let i = 0; i < primeiro; i++) html += "<span></span>";
+    for (let d = 1; d <= total; d++) {
+      const dt = new Date(ano, mes, d), passado = dt < hoje, sel = campo.value === iso(dt), eHoje = +dt === +hoje;
+      html += `<button type="button" class="dia${sel ? " sel" : ""}${eHoje ? " hoje" : ""}" data-d="${iso(dt)}"${passado ? " disabled" : ""} aria-label="${d} de ${meses[mes]} de ${ano}">${d}</button>`;
+    }
+    grid.innerHTML = html;
+    $("#calPrev").disabled = ano === hoje.getFullYear() && mes === hoje.getMonth();
+  }
+  function abre() {
+    pop.hidden = false; btn.setAttribute("aria-expanded", "true"); desenha();
+    pop.animate({ opacity: [0, 1], transform: ["translateY(-8px) scale(.98)", "none"] }, { duration: 260, easing: "cubic-bezier(.2,.7,.2,1)" });
+  }
+  function fecha() {
+    if (pop.hidden) return;
+    btn.setAttribute("aria-expanded", "false");
+    pop.animate({ opacity: [1, 0], transform: ["none", "translateY(-6px)"] }, { duration: 180 }).onfinish = () => (pop.hidden = true);
+  }
+  btn.addEventListener("click", () => (pop.hidden ? abre() : fecha()));
+  $("#calPrev").addEventListener("click", () => { mes--; if (mes < 0) { mes = 11; ano--; } desenha(); });
+  $("#calNext").addEventListener("click", () => { mes++; if (mes > 11) { mes = 0; ano++; } desenha(); });
+  grid.addEventListener("click", (e) => {
+    const b = e.target.closest(".dia"); if (!b || b.disabled) return;
+    campo.value = b.dataset.d;
+    const [y, m, d] = b.dataset.d.split("-").map(Number), dt = new Date(y, m - 1, d);
+    txt.textContent = `${d} de ${meses[m - 1].slice(0, 3)}. de ${y} · ${dias[dt.getDay()]}`;
+    btn.classList.add("preenchido");
+    desenha(); setTimeout(fecha, 180);
+  });
+  $("#calLimpar").addEventListener("click", () => { campo.value = ""; txt.textContent = "Escolher data"; btn.classList.remove("preenchido"); desenha(); fecha(); });
+  document.addEventListener("click", (e) => { if (!pop.hidden && !e.target.closest("#cal, #cDataBtn")) fecha(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") fecha(); });
+})();
+
+/* ==========================================================
    FAQ: abre e fecha com animação (um aberto por vez)
    ========================================================== */
 const faqs = $$(".faq-lista details");

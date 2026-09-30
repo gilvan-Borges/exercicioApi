@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400..700;1,400..600&family=Inter:wght@300..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=13">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
   <div class="loader" aria-hidden="true">
@@ -176,7 +176,16 @@
           <ul class="resumo-lista" id="resumoLista"><li class="vazio">Nenhum item ainda</li></ul>
           <div class="total"><span>Total estimado</span><strong id="total">R$ 0,00</strong></div>
           <label class="campo">Seu nome<input type="text" id="cNome" autocomplete="name" placeholder="Como podemos te chamar?"></label>
-          <label class="campo">Data do evento<input type="date" id="cData"></label>
+          <div class="campo">Data do evento
+            <button type="button" class="date-btn" id="cDataBtn" aria-haspopup="dialog" aria-expanded="false"><span id="cDataTxt">Escolher data</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zM4 10h16M8 3v4M16 3v4"/></svg></button>
+            <input type="hidden" id="cData">
+            <div class="cal" id="cal" hidden role="dialog" aria-label="Escolher data do evento">
+              <div class="cal-head"><button type="button" class="cal-nav" id="calPrev" aria-label="Mês anterior">‹</button><strong id="calTitulo"></strong><button type="button" class="cal-nav" id="calNext" aria-label="Próximo mês">›</button></div>
+              <div class="cal-sem"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div>
+              <div class="cal-grid" id="calGrid"></div>
+              <button type="button" class="cal-limpar" id="calLimpar">Limpar data</button>
+            </div>
+          </div>
           <label class="campo">Observações<textarea id="cObs" rows="2" placeholder="Sabores, tema, alergias..."></textarea></label>
           <button class="btn magnetic" id="enviar" disabled>Enviar pedido pelo WhatsApp</button>
           <p class="nota">Valor estimado. O orçamento final é confirmado no WhatsApp.</p>
@@ -250,6 +259,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
-  <script src="script.js?v=13"></script>
+  <script src="script.js?v=14"></script>
 </body>
 </html>
