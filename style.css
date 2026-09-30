@@ -94,7 +94,7 @@ nav a:not(.pill):hover { opacity: 1; }
 @media (max-width: 1000px) {
   .hero { flex-direction: column; align-items: flex-start; justify-content: center; }
   .hero-content { max-width: 100%; }
-  .hero-logo { position: relative; right: auto; top: auto; margin: 0 0 18px; width: 120px; height: 120px; flex: none; }
+  .hero-logo { position: absolute; right: auto; top: 50%; left: 50%; margin: 0; width: min(104vw, 620px); height: min(104vw, 620px); transform: translate(-50%, -50%); opacity: .13; pointer-events: none; }
   .hero-logo .ring { display: none; }
 }
 .hero h1 { font-size: clamp(3rem, 7vw, 6.6rem); margin-bottom: 28px; }
