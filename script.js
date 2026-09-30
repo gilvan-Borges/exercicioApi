@@ -6,6 +6,22 @@ document.querySelectorAll("[data-whats]").forEach((el) => {
   el.target = "_blank";
   el.rel = "noopener";
 });
+// --- Fotos do carrossel de eventos ---
+// Fotos de banco de imagens gratuito (Unsplash). Para usar fotos reais da Kero Doces,
+// coloque os arquivos em /fotos e troque o "src" (ex.: "fotos/casamento.jpg").
+const u = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=75`;
+const EVENTOS = [
+  { tipo: "Casamento", titulo: "Mesa de doces finos", src: u("photo-1464349095431-e9a21285b5f3") },
+  { tipo: "Aniversário", titulo: "Festa dos sonhos", src: u("photo-1558961363-fa8fdf82db35") },
+  { tipo: "Chá de bebê", titulo: "Delicadeza em cada detalhe", src: u("photo-1587314168485-3236d6710814") },
+  { tipo: "Corporativo", titulo: "Brindes que encantam", src: u("photo-1551024601-bec78aea704b") },
+  { tipo: "Noivado", titulo: "Doce começo", src: u("photo-1488477181946-6428a0291777") },
+  { tipo: "Kit presente", titulo: "Caixas personalizadas", src: u("photo-1563729784474-d77dbb933a9e") },
+];
+document.getElementById("carouselTrack").innerHTML = EVENTOS.map(
+  (e) => `<figure class="slide"><img src="${e.src}" alt="${e.tipo}: ${e.titulo}" loading="lazy" onerror="this.remove()"><figcaption><small>${e.tipo}</small><b>${e.titulo}</b></figcaption></figure>`
+).join("");
+
 document.getElementById("ano").textContent = new Date().getFullYear();
 
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -17,7 +33,7 @@ if (!window.gsap || reduce) {
   document.querySelectorAll(".big-text .ch").forEach((c) => (c.style.opacity = 1));
   document.querySelectorAll("[data-count]").forEach((n) => (n.textContent = n.dataset.count + n.dataset.suffix));
 } else {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, Draggable);
 
   // --- Quebra textos em palavras / letras ---
   document.querySelectorAll(".split").forEach((el) => {
@@ -105,6 +121,34 @@ if (!window.gsap || reduce) {
     });
     gsap.set(".doces-track", { overflowX: "auto", paddingBottom: 10 });
   });
+
+  // --- Carrossel de eventos: arrastar, botões e parallax ---
+  const car = document.getElementById("carousel");
+  const ctrack = document.getElementById("carouselTrack");
+  const maxX = () => Math.min(0, car.clientWidth - ctrack.scrollWidth - parseFloat(getComputedStyle(car).paddingLeft));
+  const drag = Draggable.create(ctrack, {
+    type: "x", edgeResistance: 0.85, cursor: "grab", activeCursor: "grabbing",
+    bounds: { minX: maxX(), maxX: 0 }, allowContextMenu: true,
+    onDrag: updateParallax, onThrowUpdate: updateParallax,
+  })[0];
+  function updateParallax() {
+    const w = window.innerWidth;
+    ctrack.querySelectorAll(".slide img").forEach((img) => {
+      const r = img.parentElement.getBoundingClientRect();
+      gsap.set(img, { x: ((r.left + r.width / 2) / w - 0.5) * -40 });
+    });
+  }
+  const step = () => (ctrack.firstElementChild ? ctrack.firstElementChild.offsetWidth + 22 : 300);
+  const go = (dir) => {
+    const x = gsap.utils.clamp(maxX(), 0, gsap.getProperty(ctrack, "x") - dir * step());
+    gsap.to(ctrack, { x, duration: 0.9, ease: "power3.out", onUpdate: () => { drag.update(); updateParallax(); } });
+  };
+  document.getElementById("next").addEventListener("click", () => go(1));
+  document.getElementById("prev").addEventListener("click", () => go(-1));
+  window.addEventListener("resize", () => { drag.applyBounds({ minX: maxX(), maxX: 0 }); });
+  ScrollTrigger.addEventListener("refresh", () => drag.applyBounds({ minX: maxX(), maxX: 0 }));
+  gsap.from(".slide", { y: 80, opacity: 0, scale: 0.94, duration: 1, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: ".carousel", start: "top 85%" } });
+  updateParallax();
 
   // --- Passos e depoimentos ---
   gsap.from(".passo", { y: 60, opacity: 0, duration: 1, stagger: 0.18, ease: "power3.out", scrollTrigger: { trigger: ".passos", start: "top 85%" } });

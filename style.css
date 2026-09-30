@@ -124,6 +124,28 @@ nav a:not(.pill):hover { opacity: 1; }
 .c3 { background: radial-gradient(circle at 32% 28%, #ffe9c2, var(--gold) 60%, #9a6a2e); box-shadow: 0 30px 60px -10px rgba(233, 184, 114, .35), inset 0 -10px 30px rgba(0, 0, 0, .25); border-radius: 22%; }
 .c4 { background: conic-gradient(from 20deg, var(--rose), var(--gold), var(--pink), var(--rose)); box-shadow: 0 30px 60px -10px rgba(255, 111, 165, .35); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
 
+/* eventos / carrossel */
+.eventos { padding: 140px 0 100px; overflow: hidden; }
+.eventos-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; padding: 0 5vw; margin-bottom: 50px; }
+.eventos-head h2 { font-size: clamp(2.4rem, 6vw, 5rem); }
+.eventos-head em { color: var(--pink); }
+.eventos-nav { display: flex; gap: 12px; }
+.nav-btn { width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: 1.3rem; cursor: pointer; transition: background .3s, border-color .3s; }
+.nav-btn:hover { background: var(--rose); border-color: var(--rose); }
+.carousel { padding-left: 5vw; cursor: grab; }
+.carousel:active { cursor: grabbing; }
+.carousel-track { display: flex; gap: 22px; width: max-content; padding-right: 5vw; will-change: transform; }
+.slide { position: relative; flex: 0 0 clamp(260px, 30vw, 440px); aspect-ratio: 3 / 4; border-radius: 26px; overflow: hidden; background: linear-gradient(150deg, var(--rose), #5a1f34); user-select: none; }
+.slide:nth-child(3n+2) { margin-top: 50px; aspect-ratio: 3 / 3.6; }
+.slide:nth-child(3n) { background: linear-gradient(150deg, var(--gold), #7a4e22); }
+.slide img { position: absolute; inset: -6%; width: 112%; height: 112%; object-fit: cover; pointer-events: none; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+.slide:hover img { transform: scale(1.06); }
+.slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 50%, rgba(26, 13, 16, .85)); }
+.slide figcaption { position: absolute; left: 24px; right: 24px; bottom: 22px; z-index: 2; }
+.slide figcaption small { display: block; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+.slide figcaption b { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; }
+.drag-hint { padding: 26px 5vw 0; font-size: .72rem; letter-spacing: .25em; text-transform: uppercase; color: var(--muted); }
+
 /* pedido */
 .pedido { padding: 160px 5vw 100px; max-width: 1300px; margin: 0 auto; }
 .pedido h2 { font-size: clamp(2.4rem, 6vw, 5rem); margin-bottom: 70px; }

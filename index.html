@@ -26,6 +26,7 @@
     <a href="#inicio" class="logo">Kero<em>Doces</em> <small>RJ</small></a>
     <nav>
       <a href="#doces">Doces</a>
+      <a href="#eventos">Eventos</a>
       <a href="#historia">Sobre</a>
       <a href="#pedido">Como pedir</a>
       <a href="#contato" class="pill magnetic" data-whats="Olá! Vim pelo site e quero fazer um pedido.">Encomendar</a>
@@ -113,6 +114,24 @@
       </div>
     </section>
 
+    <!-- EVENTOS (carrossel) -->
+    <section id="eventos" class="eventos">
+      <div class="eventos-head">
+        <div>
+          <p class="eyebrow reveal">Portfólio</p>
+          <h2 class="reveal">Eventos que <em>adoçamos</em></h2>
+        </div>
+        <div class="eventos-nav reveal">
+          <button class="nav-btn magnetic" id="prev" aria-label="Anterior">←</button>
+          <button class="nav-btn magnetic" id="next" aria-label="Próximo">→</button>
+        </div>
+      </div>
+      <div class="carousel" id="carousel">
+        <div class="carousel-track" id="carouselTrack"></div>
+      </div>
+      <p class="drag-hint">arraste para ver mais</p>
+    </section>
+
     <!-- COMO PEDIR -->
     <section id="pedido" class="pedido">
       <p class="eyebrow reveal">Simples assim</p>
@@ -153,6 +172,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
