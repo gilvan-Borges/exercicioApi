@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gilvan-borges.github.io/kerodocerj/sitemap.xml
