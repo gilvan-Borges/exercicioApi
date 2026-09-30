@@ -2,7 +2,7 @@
 
 Landing page da doceria artesanal [@kerodocesrj](https://www.instagram.com/kerodocesrj), feita com HTML, CSS e GSAP.
 
-Site: https://gilvan-borges.github.io/kerodocesrj/
+Site: https://gilvan-borges.github.io/kerodocerj/
 
 O deploy no GitHub Pages é automático a cada push na `main` (`.github/workflows/pages.yml`).
 
