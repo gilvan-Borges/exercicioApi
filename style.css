@@ -174,7 +174,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10
 
 @media (max-width: 860px) {
   nav a:not(.pill) { display: none; }
-  .doces-pin { flex-direction: column; align-items: stretch; justify-content: center; gap: 28px; padding: 120px 0 70px; }
+  .doces-pin { min-height: 0; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 24px; padding: 64px 0 48px; }
   .doces-head { width: 100%; padding: 0 5vw; }
   .doces-track {
     width: 100%; overflow-x: auto; overflow-y: hidden; padding: 0 5vw 18px;
@@ -182,28 +182,34 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10
     scrollbar-width: none;
   }
   .doces-track::-webkit-scrollbar { display: none; }
-  .panel { flex: 0 0 76vw; height: auto; min-height: 420px; scroll-snap-align: center; }
+  .panel { flex: 0 0 76vw; height: auto; min-height: 0; padding-bottom: 28px; scroll-snap-align: center; }
   .candy { position: relative; top: 0; left: auto; margin: 26px auto 30px; flex: 0 0 auto; }
   .panel { justify-content: flex-start; }
   .panel-n { position: static; margin-bottom: 4px; }
-  .eventos { padding: 100px 0 70px; }
-  .eventos-head { flex-direction: column; align-items: flex-start; }
+  .eventos { padding: 64px 0 48px; }
+  .eventos-head { flex-direction: column; align-items: flex-start; margin-bottom: 28px; }
   .slide:nth-child(3n+2) { margin-top: 0; }
   .slide { flex-basis: 74vw; }
-  .historia, .pedido { padding-top: 100px; }
-  .cta { padding: 110px 5vw; }
+  .historia { padding: 64px 6vw 56px; }
+  .pedido { padding: 64px 6vw 48px; }
+  .pedido h2 { margin-bottom: 32px; }
+  .passo { padding: 24px 0; }
+  .depoimentos { padding: 40px 6vw 64px; }
+  .quote { padding: 26px; font-size: 1.2rem; }
+  .marquee { padding: 18px 0; }
+  .cta { padding: 72px 6vw; }
 }
 @media (max-width: 600px) {
   .logo { font-size: 1.25rem; }
   .pill { padding: 8px 16px; font-size: .85rem; }
-  .hero { padding: 120px 6vw 90px; min-height: 92vh; }
+  .hero { padding: 110px 6vw 56px; min-height: 0; }
   .hero h1 { font-size: clamp(2.3rem, 11vw, 3.4rem); line-height: 1.08; }
   .acoes { flex-direction: column; }
   .acoes .btn { width: 100%; text-align: center; padding: 16px 24px; }
   .doces-head h2, .pedido h2, .eventos-head h2 { font-size: clamp(2rem, 9.5vw, 3rem); }
   .cta h2 { font-size: clamp(2.2rem, 11vw, 3.4rem); }
   .big-text { font-size: clamp(1.4rem, 6.4vw, 2rem); }
-  .numeros { gap: 30px; margin-top: 50px; }
+  .numeros { gap: 24px; margin-top: 36px; padding-top: 28px; }
   .marquee-track { gap: 24px; }
   footer { flex-direction: column; text-align: center; }
   .hero-scroll { display: none; }
