@@ -119,7 +119,6 @@ if (!window.gsap || reduce) {
     gsap.utils.toArray(".panel").forEach((p) => {
       gsap.from(p, { y: 60, opacity: 0, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: p, start: "top 90%" } });
     });
-    gsap.set(".doces-track", { overflowX: "auto", paddingBottom: 10 });
   });
 
   // --- Carrossel de eventos: arrastar, botões e parallax ---

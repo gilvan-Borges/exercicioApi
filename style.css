@@ -48,7 +48,10 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.05; let
 .topo {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 22px 5vw; mix-blend-mode: normal;
+  padding: 16px 5vw; transition: background .3s, border-color .3s;
+  background: linear-gradient(rgba(26, 13, 16, .82), rgba(26, 13, 16, .55));
+  -webkit-backdrop-filter: blur(18px) saturate(140%); backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid var(--line);
 }
 .logo { font-family: var(--serif); font-size: 1.5rem; }
 .logo em { color: var(--pink); margin-left: 2px; }
@@ -171,9 +174,39 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10
 
 @media (max-width: 860px) {
   nav a:not(.pill) { display: none; }
-  .doces-pin { flex-direction: column; align-items: flex-start; justify-content: center; gap: 30px; padding: 90px 5vw 50px; }
-  .doces-head { width: 100%; }
-  .panel { flex-basis: 72vw; height: 54vh; }
+  .doces-pin { flex-direction: column; align-items: stretch; justify-content: center; gap: 28px; padding: 120px 0 70px; }
+  .doces-head { width: 100%; padding: 0 5vw; }
+  .doces-track {
+    width: 100%; overflow-x: auto; overflow-y: hidden; padding: 0 5vw 18px;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y;
+    scrollbar-width: none;
+  }
+  .doces-track::-webkit-scrollbar { display: none; }
+  .panel { flex: 0 0 76vw; height: auto; min-height: 420px; scroll-snap-align: center; }
+  .candy { position: relative; top: 0; left: auto; margin: 26px auto 30px; flex: 0 0 auto; }
+  .panel { justify-content: flex-start; }
+  .panel-n { position: static; margin-bottom: 4px; }
+  .eventos { padding: 100px 0 70px; }
+  .eventos-head { flex-direction: column; align-items: flex-start; }
+  .slide:nth-child(3n+2) { margin-top: 0; }
+  .slide { flex-basis: 74vw; }
+  .historia, .pedido { padding-top: 100px; }
+  .cta { padding: 110px 5vw; }
+}
+@media (max-width: 600px) {
+  .logo { font-size: 1.25rem; }
+  .pill { padding: 8px 16px; font-size: .85rem; }
+  .hero { padding: 120px 6vw 90px; min-height: 92vh; }
+  .hero h1 { font-size: clamp(2.3rem, 11vw, 3.4rem); line-height: 1.08; }
+  .acoes { flex-direction: column; }
+  .acoes .btn { width: 100%; text-align: center; padding: 16px 24px; }
+  .doces-head h2, .pedido h2, .eventos-head h2 { font-size: clamp(2rem, 9.5vw, 3rem); }
+  .cta h2 { font-size: clamp(2.2rem, 11vw, 3.4rem); }
+  .big-text { font-size: clamp(1.4rem, 6.4vw, 2rem); }
+  .numeros { gap: 30px; margin-top: 50px; }
+  .marquee-track { gap: 24px; }
+  footer { flex-direction: column; text-align: center; }
+  .hero-scroll { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .big-text .ch { opacity: 1; }
