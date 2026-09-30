@@ -126,11 +126,39 @@ $("#enviar").addEventListener("click", () => {
 atualizaResumo();
 
 /* ==========================================================
-   FAQ: um aberto por vez
+   FAQ: abre e fecha com animação (um aberto por vez)
    ========================================================== */
-$$(".faq-lista details").forEach((d) =>
-  d.addEventListener("toggle", () => { if (d.open) $$(".faq-lista details").forEach((o) => o !== d && (o.open = false)); })
-);
+const faqs = $$(".faq-lista details");
+faqs.forEach((d) => {
+  const sum = d.querySelector("summary");
+  const body = d.querySelector("p");
+  d._anim = null;
+  d.classList.toggle("is-open", d.open);
+  sum.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (d.classList.contains("is-open")) fechaFaq(d); else { faqs.forEach((o) => o !== d && fechaFaq(o)); abreFaq(d); }
+  });
+  d._body = body; d._sum = sum;
+});
+function abreFaq(d) {
+  if (d._anim) d._anim.cancel();
+  const ini = d.offsetHeight;
+  d.open = true; d.classList.add("is-open");
+  const fim = d._sum.offsetHeight + d._body.offsetHeight;
+  d._anim = d.animate({ height: [ini + "px", fim + "px"] }, { duration: 420, easing: "cubic-bezier(.2,.7,.2,1)" });
+  d._body.animate({ opacity: [0, 1], transform: ["translateY(-8px)", "none"] }, { duration: 420, delay: 60, easing: "ease-out", fill: "backwards" });
+  d._anim.onfinish = d._anim.oncancel = () => { d._anim = null; d.style.height = ""; };
+}
+function fechaFaq(d) {
+  if (!d.open && !d.classList.contains("is-open")) return;
+  if (d._anim) d._anim.cancel();
+  const ini = d.offsetHeight;
+  d.classList.remove("is-open");
+  d._body.animate({ opacity: [1, 0] }, { duration: 200, fill: "forwards" });
+  d._anim = d.animate({ height: [ini + "px", d._sum.offsetHeight + "px"] }, { duration: 360, easing: "cubic-bezier(.4,0,.2,1)" });
+  d._anim.onfinish = () => { d._anim = null; d.open = false; d.style.height = ""; d._body.getAnimations().forEach((x) => x.cancel()); };
+  d._anim.oncancel = () => { d._anim = null; };
+}
 
 /* ==========================================================
    FOTOS DO CARDÁPIO
@@ -158,27 +186,83 @@ function renderEventos(filtro) {
 }
 renderEventos("todos");
 
-const lb = $("#lightbox"); let lbI = 0;
-function abreLB(i) {
-  lbI = (i + listaAtual.length) % listaAtual.length;
-  const e = listaAtual[lbI];
-  $("#lbImg").src = foto(e.id, 1600);
-  $("#lbImg").alt = `${e.tipo}: ${e.titulo}`;
-  $("#lbCap").textContent = `${e.tipo} · ${e.titulo}`;
-  lb.hidden = false; document.body.style.overflow = "hidden";
-  $("#lbClose").focus();
-  track("galeria_ampliar", { foto: e.titulo });
+const lb = $("#lightbox"), lbTrack = $("#lbTrack"), lbView = $("#lbView");
+let lbI = 0, lbChave = "", lbDx = 0;
+const lbW = () => lbView.clientWidth;
+function lbPos(animar) {
+  lbTrack.style.transition = animar ? "transform .38s cubic-bezier(.2,.7,.2,1)" : "none";
+  lbTrack.style.transform = `translate3d(${-lbI * lbW() + lbDx}px,0,0)`;
 }
-function fechaLB() { lb.hidden = true; document.body.style.overflow = ""; $("#lbImg").removeAttribute("src"); }
+function lbAtualiza() {
+  $("#lbCount").textContent = `${lbI + 1} / ${listaAtual.length}`;
+  $("#lbPrev").style.opacity = lbI === 0 ? 0.3 : 1;
+  $("#lbNext").style.opacity = lbI === listaAtual.length - 1 ? 0.3 : 1;
+  // pré-carrega vizinhas para a troca ser instantânea
+  [lbI - 1, lbI + 1, lbI + 2].forEach((k) => { const im = lbTrack.querySelectorAll("img")[k]; if (im && !im.src) im.src = im.dataset.src; });
+}
+function lbIr(i, animar = true) {
+  lbI = Math.max(0, Math.min(listaAtual.length - 1, i));
+  lbDx = 0; lbPos(animar); lbAtualiza();
+}
+function abreLB(i) {
+  const chave = listaAtual.map((e) => e.id).join();
+  if (chave !== lbChave) {
+    lbChave = chave;
+    lbTrack.innerHTML = listaAtual.map((e) =>
+      `<figure class="lb-slide"><img data-src="${foto(e.id, 1200)}" alt="${e.tipo}: ${e.titulo}" draggable="false" decoding="async"><figcaption>${e.tipo} · ${e.titulo}</figcaption></figure>`
+    ).join("");
+  }
+  lb.hidden = false; document.body.style.overflow = "hidden";
+  lbI = Math.max(0, Math.min(listaAtual.length - 1, i));
+  const atual = lbTrack.querySelectorAll("img")[lbI];
+  if (!atual.src) atual.src = atual.dataset.src;
+  lbDx = 0; lbPos(false); lbAtualiza();
+  $("#lbClose").focus();
+  track("galeria_ampliar", { foto: listaAtual[lbI].titulo });
+}
+function fechaLB() { lb.hidden = true; document.body.style.overflow = ""; }
 $("#lbClose").onclick = fechaLB;
-$("#lbPrev").onclick = () => abreLB(lbI - 1);
-$("#lbNext").onclick = () => abreLB(lbI + 1);
-lb.addEventListener("click", (e) => { if (e.target === lb) fechaLB(); });
+$("#lbPrev").onclick = () => lbIr(lbI - 1);
+$("#lbNext").onclick = () => lbIr(lbI + 1);
+window.addEventListener("resize", () => { if (!lb.hidden) lbPos(false); });
 document.addEventListener("keydown", (e) => {
   if (lb.hidden) return;
   if (e.key === "Escape") fechaLB();
-  if (e.key === "ArrowLeft") abreLB(lbI - 1);
-  if (e.key === "ArrowRight") abreLB(lbI + 1);
+  if (e.key === "ArrowLeft") lbIr(lbI - 1);
+  if (e.key === "ArrowRight") lbIr(lbI + 1);
+});
+// deslizar com o dedo/mouse, igual ao carrossel
+(function () {
+  let x0 = 0, y0 = 0, t0 = 0, ativo = false, horizontal = null, moveu = false;
+  lbView.addEventListener("pointerdown", (e) => { ativo = true; horizontal = null; moveu = false; x0 = e.clientX; y0 = e.clientY; t0 = performance.now(); lbDx = 0; });
+  lbView.addEventListener("pointermove", (e) => {
+    if (!ativo) return;
+    const dx = e.clientX - x0, dy = e.clientY - y0;
+    if (horizontal === null && Math.hypot(dx, dy) > 8) horizontal = Math.abs(dx) > Math.abs(dy);
+    if (!horizontal) return;
+    moveu = true;
+    if (!lbView.hasPointerCapture(e.pointerId)) lbView.setPointerCapture(e.pointerId);
+    const fim = (lbI === 0 && dx > 0) || (lbI === listaAtual.length - 1 && dx < 0);
+    lbDx = fim ? dx * 0.3 : dx;
+    lbPos(false);
+  });
+  const solta = (e) => {
+    if (!ativo) return; ativo = false;
+    const dx = lbDx, v = Math.abs(dx) / Math.max(1, performance.now() - t0);
+    if (horizontal && (Math.abs(dx) > lbW() * 0.18 || v > 0.45)) lbIr(lbI + (dx < 0 ? 1 : -1));
+    else lbIr(lbI);
+    if (!moveu && e.type === "pointerup" && !(e.target.closest && e.target.closest("img, figcaption"))) fechaLB();
+  };
+  lbView.addEventListener("pointerup", solta);
+  lbView.addEventListener("pointercancel", solta);
+})();
+// abre só em clique de verdade (não quando o dedo arrastou o carrossel)
+let downX = 0, downY = 0;
+track$.addEventListener("pointerdown", (e) => { downX = e.clientX; downY = e.clientY; });
+track$.addEventListener("click", (e) => {
+  if (Math.hypot(e.clientX - downX, e.clientY - downY) > 10) return;
+  const s = e.target.closest(".slide");
+  if (s) abreLB(+s.dataset.i);
 });
 track$.addEventListener("keydown", (e) => { const s = e.target.closest(".slide"); if (s && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); abreLB(+s.dataset.i); } });
 
@@ -197,7 +281,6 @@ if (!window.gsap || reduce) {
   loader.remove();
   $$(".big-text .ch").forEach((c) => (c.style.opacity = 1));
   $$("[data-count]").forEach((n) => (n.textContent = n.dataset.count + n.dataset.suffix));
-  track$.addEventListener("click", (e) => { const s = e.target.closest(".slide"); if (s) abreLB(+s.dataset.i); });
   $$(".chip").forEach((c) => c.addEventListener("click", () => {
     $$(".chip").forEach((x) => { x.classList.toggle("on", x === c); x.setAttribute("aria-selected", x === c); });
     renderEventos(c.dataset.filter);
@@ -330,7 +413,6 @@ if (!window.gsap || reduce) {
     type: "x", edgeResistance: 0.85, cursor: "grab", activeCursor: "grabbing",
     bounds: { minX: maxX(), maxX: 0 }, allowContextMenu: true,
     onDrag: upd, onThrowUpdate: upd,
-    onClick: (e) => { const s = e.target.closest(".slide"); if (s) abreLB(+s.dataset.i); },
   })[0];
   const step = () => (ctrack.firstElementChild ? ctrack.firstElementChild.offsetWidth + 22 : 300);
   const go = (dir) => gsap.to(ctrack, { x: gsap.utils.clamp(maxX(), 0, gsap.getProperty(ctrack, "x") - dir * step()), duration: 0.9, ease: "power3.out", onUpdate: () => { drag.update(); upd(); } });
