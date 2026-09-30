@@ -67,6 +67,9 @@ if (!window.gsap || reduce) {
   // --- Orbs: flutuação + parallax ---
   gsap.to(".orb-1", { x: -60, y: 50, duration: 7, ease: "sine.inOut", repeat: -1, yoyo: true });
   gsap.to(".orb-2", { x: 70, y: -40, duration: 9, ease: "sine.inOut", repeat: -1, yoyo: true });
+  gsap.to(".hero-logo .ring", { rotation: 360, duration: 60, ease: "none", repeat: -1 });
+  gsap.to(".hero-logo .r2", { rotation: -360, duration: 90, ease: "none", repeat: -1 });
+  gsap.from(".hero-logo img", { scale: 0.8, opacity: 0, duration: 1.6, ease: "expo.out", delay: 2.4 });
   gsap.to(".orb-3", { x: -30, y: 60, duration: 6, ease: "sine.inOut", repeat: -1, yoyo: true });
   gsap.to(".hero-content", { yPercent: 18, opacity: 0.2, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
   gsap.to(".orb-1", { yPercent: 30, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
