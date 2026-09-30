@@ -40,10 +40,9 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.02; let
 
 /* loader */
 .loader { position: fixed; inset: 0; z-index: 100; background: var(--bg); display: grid; place-items: center; }
-.loader-mark { position: absolute; top: 50%; left: 50%; width: min(86vw, 640px); height: min(86vw, 640px); opacity: .14; pointer-events: none; }
-.loader-inner { position: relative; text-align: center; overflow: hidden; }
-.loader-word { font-family: var(--serif); font-size: clamp(2.4rem, 8vw, 5rem); font-style: italic; display: block; }
-.loader-bar { display: block; width: 180px; height: 2px; margin: 18px auto 0; background: var(--line); }
+.loader-mark { display: block; width: min(62vw, 300px); height: min(62vw, 300px); margin: 0 auto; will-change: transform, opacity; }
+.loader-inner { position: relative; text-align: center; }
+.loader-bar { display: block; width: 140px; height: 2px; margin: 26px auto 0; background: var(--line); }
 .loader-bar i { display: block; height: 100%; width: 0; background: var(--pink); }
 
 /* header */
@@ -62,7 +61,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.02; let
 nav { display: flex; gap: 30px; align-items: center; font-size: .9rem; }
 nav a:not(.pill) { opacity: .75; transition: opacity .2s; }
 nav a:not(.pill):hover { opacity: 1; }
-.pill { padding: 10px 22px; border: 1px solid var(--line); border-radius: 999px; background: rgba(34, 26, 22, .5); backdrop-filter: blur(10px); transition: background .3s, border-color .3s; }
+.pill { padding: 10px 22px; border: 1px solid var(--line); border-radius: 999px; background: rgba(34, 26, 22, .5); transition: background .3s, border-color .3s; }
 .pill:hover { background: var(--pink); border-color: var(--pink); color: #2a1f18; }
 
 /* buttons */
@@ -78,7 +77,7 @@ nav a:not(.pill):hover { opacity: 1; }
 .acoes.center { justify-content: center; }
 
 /* orbs */
-.orb { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; pointer-events: none; }
+.orb { position: absolute; border-radius: 50%; opacity: .55; pointer-events: none; }
 .orb-1 { width: 42vw; height: 42vw; top: -10%; right: -8%; background: radial-gradient(circle, #6b5646, transparent 70%); }
 .orb-2 { width: 30vw; height: 30vw; bottom: 0; left: -8%; background: radial-gradient(circle, #51443c, transparent 70%); }
 .orb-3 { width: 18vw; height: 18vw; top: 38%; right: 28%; background: radial-gradient(circle, var(--gold), transparent 70%); opacity: .3; }
@@ -88,13 +87,13 @@ nav a:not(.pill):hover { opacity: 1; }
 .hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 140px 5vw 100px; overflow: hidden; }
 .hero-content { position: relative; z-index: 2; max-width: min(62%, 860px); }
 .hero-logo { position: absolute; z-index: 1; right: 6vw; top: 50%; width: clamp(240px, 30vw, 440px); aspect-ratio: 1; margin-top: calc(clamp(240px, 30vw, 440px) / -2); }
-.hero-logo img { position: relative; width: 100%; height: 100%; filter: drop-shadow(0 20px 50px rgba(0, 0, 0, .45)); }
+.hero-logo img { position: relative; width: 100%; height: 100%; }
 .hero-logo .ring { position: absolute; inset: -4%; border-radius: 50%; border: 1px dashed var(--line); }
 .hero-logo .ring.r2 { inset: -9%; border-style: solid; opacity: .55; }
 @media (max-width: 1000px) {
   .hero { flex-direction: column; align-items: flex-start; justify-content: center; }
   .hero-content { max-width: 100%; }
-  .hero-logo { position: absolute; right: auto; top: 50%; left: 50%; margin: 0; width: min(104vw, 620px); height: min(104vw, 620px); transform: translate(-50%, -50%); opacity: .16; pointer-events: none; }
+  .hero-logo { display: none; }
   .hero-logo .ring { display: none; }
 }
 .hero h1 { font-size: clamp(3rem, 7vw, 6.6rem); margin-bottom: 28px; }
@@ -227,6 +226,11 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10
   footer { flex-direction: column; text-align: center; }
   .hero-scroll { display: flex; left: 6vw; bottom: 22px; }
   .hero .lead { color: rgba(247, 238, 223, .82); text-shadow: 0 1px 14px var(--bg); }
+}
+@media (max-width: 860px), (hover: none) {
+  .grain { display: none; }
+  .orb { opacity: .4; }
+  .orb-3 { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .big-text .ch { opacity: 1; }

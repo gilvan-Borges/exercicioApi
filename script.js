@@ -53,21 +53,31 @@ if (!window.gsap || reduce) {
   gsap.set(".hero .split .w > span, .cta .split .w > span", { yPercent: 115 });
 
   // --- Loader + intro ---
-  gsap.set(".loader-mark", { xPercent: -50, yPercent: -28 });
-  gsap.fromTo(".loader-mark", { scale: 0.85, rotation: -8, opacity: 0 }, { scale: 1, rotation: 0, opacity: 0.14, duration: 1.6, ease: "power3.out" });
-  const intro = gsap.timeline();
-  intro
-    .to(".loader-bar i", { width: "100%", duration: 1.1, ease: "power2.inOut" })
-    .to(".loader-mark", { scale: 1.15, opacity: 0, duration: 0.7, ease: "power2.in" }, "+=0.1")
-    .to(".loader-word", { yPercent: -120, duration: 0.6, ease: "power3.in" }, "+=0.1")
-    .to(loader, { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "-=0.2")
-    .set(loader, { display: "none" })
-    .to(".topo", { opacity: 1, duration: 0.8 }, "-=0.3")
-    .to(".hero .eyebrow", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-    .to(".hero .split .w > span", { yPercent: 0, duration: 1.1, ease: "expo.out", stagger: 0.09 }, "-=0.6")
-    .to(".hero .lead, .hero .acoes, .hero-scroll", { opacity: 1, duration: 0.9, stagger: 0.12 }, "-=0.7");
+  // A logo aparece e o loader só sai quando a página (fontes e imagens) terminou de carregar.
+  const ready = Promise.race([
+    Promise.all([
+      new Promise((r) => (document.readyState === "complete" ? r() : window.addEventListener("load", r, { once: true }))),
+      document.fonts ? document.fonts.ready : Promise.resolve(),
+    ]),
+    new Promise((r) => setTimeout(r, 4000)), // limite de segurança
+  ]);
+  const mark = gsap.timeline();
+  mark.fromTo(".loader-mark", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" })
+      .to(".loader-bar i", { width: "100%", duration: 1.0, ease: "power2.inOut" }, 0.1);
+  Promise.all([ready, new Promise((r) => mark.eventCallback("onComplete", r))]).then(() => {
+    gsap.timeline()
+      .to(".loader-inner", { scale: 0.92, opacity: 0, duration: 0.45, ease: "power2.in" })
+      .to(loader, { opacity: 0, duration: 0.4, ease: "power1.out" }, "-=0.15")
+      .set(loader, { display: "none" })
+      .to(".topo", { opacity: 1, duration: 0.6 }, "-=0.2")
+      .to(".hero .eyebrow", { opacity: 1, duration: 0.6 }, "-=0.4")
+      .to(".hero .split .w > span", { yPercent: 0, duration: 1, ease: "expo.out", stagger: 0.08 }, "-=0.4")
+      .to(".hero .lead, .hero .acoes, .hero-scroll", { opacity: 1, duration: 0.7, stagger: 0.1 }, "-=0.6");
+  });
 
   // --- Orbs: flutuação + parallax ---
+  const desktop = window.matchMedia("(min-width: 861px)").matches;
+  if (desktop) {
   gsap.to(".orb-1", { x: -60, y: 50, duration: 7, ease: "sine.inOut", repeat: -1, yoyo: true });
   gsap.to(".orb-2", { x: 70, y: -40, duration: 9, ease: "sine.inOut", repeat: -1, yoyo: true });
   gsap.to(".hero-logo .ring", { rotation: 360, duration: 60, ease: "none", repeat: -1 });
@@ -76,6 +86,7 @@ if (!window.gsap || reduce) {
   gsap.to(".orb-3", { x: -30, y: 60, duration: 6, ease: "sine.inOut", repeat: -1, yoyo: true });
   gsap.to(".hero-content", { yPercent: 18, opacity: 0.2, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
   gsap.to(".orb-1", { yPercent: 30, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  }
 
   // --- Marquee ---
   const track = document.querySelector(".marquee-track");
@@ -164,7 +175,7 @@ if (!window.gsap || reduce) {
     scrollTrigger: { trigger: ".cta", start: "top 65%" },
   });
   gsap.from(".cta .lead, .cta .acoes", { y: 30, opacity: 0, duration: 1, stagger: 0.15, ease: "power3.out", scrollTrigger: { trigger: ".cta", start: "top 55%" } });
-  gsap.to(".orb-4", { scale: 1.25, duration: 5, ease: "sine.inOut", repeat: -1, yoyo: true });
+  if (desktop) gsap.to(".orb-4", { scale: 1.25, duration: 5, ease: "sine.inOut", repeat: -1, yoyo: true });
 
   // --- Cursor customizado + botões magnéticos ---
   const cursor = document.querySelector(".cursor");
