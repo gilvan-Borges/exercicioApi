@@ -4,75 +4,155 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kero Doces RJ | Doces artesanais no Rio de Janeiro</title>
-  <meta name="description" content="Kero Doces RJ: doces artesanais feitos com carinho para festas, presentes e momentos especiais no Rio de Janeiro. Peça pelo WhatsApp!">
+  <meta name="description" content="Kero Doces RJ: doces artesanais para festas, presentes e momentos especiais no Rio de Janeiro. Encomende pelo WhatsApp.">
+  <meta name="theme-color" content="#1a0d10">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..500&family=Inter:wght@300..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <span class="loader-word">Kero Doces</span>
+      <span class="loader-bar"><i></i></span>
+    </div>
+  </div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
   <header class="topo">
-    <a href="#inicio" class="logo">Kero Doces <span>RJ</span></a>
+    <a href="#inicio" class="logo">Kero<em>Doces</em> <small>RJ</small></a>
     <nav>
-      <a href="#produtos">Doces</a>
-      <a href="#como-pedir">Como pedir</a>
-      <a href="#depoimentos">Clientes</a>
-      <a href="#contato" class="btn btn-pequeno">Fazer pedido</a>
+      <a href="#doces">Doces</a>
+      <a href="#historia">Sobre</a>
+      <a href="#pedido">Como pedir</a>
+      <a href="#contato" class="pill magnetic" data-whats="Olá! Vim pelo site e quero fazer um pedido.">Encomendar</a>
     </nav>
   </header>
 
   <main>
+    <!-- HERO -->
     <section id="inicio" class="hero">
-      <div class="hero-texto">
-        <p class="selo">Doces artesanais no Rio de Janeiro</p>
-        <h1>Doces feitos com carinho para adoçar seus melhores momentos</h1>
-        <p>Festas, presentes, lembrancinhas ou aquele desejo de todo dia. Encomende os doces da Kero Doces RJ e surpreenda quem você ama.</p>
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+
+      <div class="hero-content">
+        <p class="eyebrow">Doceria artesanal · Rio de Janeiro</p>
+        <h1 class="split">Pequenos luxos que derretem na boca</h1>
+        <p class="lead">Doces feitos à mão, em pequenos lotes, para transformar festas, presentes e dias comuns em memórias doces.</p>
         <div class="acoes">
-          <a class="btn" data-whats="Olá! Vim pelo site e quero fazer um pedido.">Pedir pelo WhatsApp</a>
-          <a class="btn btn-contorno" href="#produtos">Ver os doces</a>
+          <a class="btn magnetic" data-whats="Olá! Vim pelo site e quero fazer um pedido.">Fazer meu pedido</a>
+          <a class="btn btn-ghost magnetic" href="#doces">Explorar o cardápio</a>
         </div>
       </div>
-      <div class="hero-arte" aria-hidden="true">🍫🍓🍰</div>
+
+      <div class="hero-scroll"><span>role</span><i></i></div>
     </section>
 
-    <section id="produtos" class="secao">
-      <h2>Nossos doces</h2>
-      <p class="sub">Tudo produzido com ingredientes selecionados e muito capricho.</p>
-      <div class="cards">
-        <article class="card"><span>🍫</span><h3>Brigadeiros gourmet</h3><p>Sabores clássicos e especiais, perfeitos para festas e presentes.</p></article>
-        <article class="card"><span>🍓</span><h3>Doces finos</h3><p>Cajuzinhos, beijinhos, bombons e muito mais, feitos na hora.</p></article>
-        <article class="card"><span>🎂</span><h3>Bolos e tortas</h3><p>Sobremesas para comemorar do jeito que merece.</p></article>
-        <article class="card"><span>🎁</span><h3>Kits presente</h3><p>Caixas e cestas personalizadas para qualquer ocasião.</p></article>
+    <!-- MARQUEE -->
+    <section class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Brigadeiros gourmet</span><b>✦</b>
+        <span>Doces finos</span><b>✦</b>
+        <span>Bolos &amp; tortas</span><b>✦</b>
+        <span>Kits presente</span><b>✦</b>
+        <span>Brigadeiros gourmet</span><b>✦</b>
+        <span>Doces finos</span><b>✦</b>
+        <span>Bolos &amp; tortas</span><b>✦</b>
+        <span>Kits presente</span><b>✦</b>
       </div>
     </section>
 
-    <section id="como-pedir" class="secao rosa">
-      <h2>Como pedir</h2>
+    <!-- HISTÓRIA -->
+    <section id="historia" class="historia">
+      <p class="eyebrow reveal">Nossa essência</p>
+      <h2 class="big-text">Cada doce é feito à mão, com ingredientes selecionados e o capricho de quem ama o que faz. Sem pressa, sem atalhos, só sabor.</h2>
+      <div class="numeros">
+        <div class="num reveal"><strong data-count="100" data-suffix="%">0</strong><span>artesanal</span></div>
+        <div class="num reveal"><strong data-count="4" data-suffix="+">0</strong><span>linhas de doces</span></div>
+        <div class="num reveal"><strong data-count="1" data-suffix="">0</strong><span>paixão por adoçar</span></div>
+      </div>
+    </section>
+
+    <!-- DOCES (scroll horizontal) -->
+    <section id="doces" class="doces">
+      <div class="doces-pin">
+        <div class="doces-head">
+          <p class="eyebrow">Cardápio</p>
+          <h2>Escolha seu<br><em>vício doce</em></h2>
+        </div>
+        <div class="doces-track">
+          <article class="panel p1">
+            <span class="panel-n">01</span>
+            <div class="candy c1"></div>
+            <h3>Brigadeiros gourmet</h3>
+            <p>Sabores clássicos e autorais, enrolados à mão e perfeitos para festas e presentes.</p>
+          </article>
+          <article class="panel p2">
+            <span class="panel-n">02</span>
+            <div class="candy c2"></div>
+            <h3>Doces finos</h3>
+            <p>Bombons, cajuzinhos e beijinhos feitos na hora, com acabamento impecável.</p>
+          </article>
+          <article class="panel p3">
+            <span class="panel-n">03</span>
+            <div class="candy c3"></div>
+            <h3>Bolos &amp; tortas</h3>
+            <p>Sobremesas para comemorar do jeito que a ocasião merece.</p>
+          </article>
+          <article class="panel p4">
+            <span class="panel-n">04</span>
+            <div class="candy c4"></div>
+            <h3>Kits presente</h3>
+            <p>Caixas e cestas personalizadas para encantar quem você ama.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO PEDIR -->
+    <section id="pedido" class="pedido">
+      <p class="eyebrow reveal">Simples assim</p>
+      <h2 class="reveal">Como pedir</h2>
       <ol class="passos">
-        <li><b>1</b><p>Chame no WhatsApp e conte o que você precisa.</p></li>
-        <li><b>2</b><p>Escolha os sabores, a quantidade e a data.</p></li>
-        <li><b>3</b><p>Confirme o pedido e receba ou retire no Rio de Janeiro.</p></li>
+        <li class="passo"><b>01</b><h3>Chame no WhatsApp</h3><p>Conte a ocasião, a data e o que você imagina.</p></li>
+        <li class="passo"><b>02</b><h3>Monte seu pedido</h3><p>Escolha sabores, quantidades e personalizações.</p></li>
+        <li class="passo"><b>03</b><h3>Receba com carinho</h3><p>Entrega ou retirada no Rio de Janeiro, na data combinada.</p></li>
       </ol>
     </section>
 
-    <section id="depoimentos" class="secao">
-      <h2>Quem provou, aprovou</h2>
-      <div class="cards">
-        <blockquote class="card">“Os doces estavam lindos e deliciosos. A festa toda elogiou!”<cite>Cliente Kero Doces</cite></blockquote>
-        <blockquote class="card">“Atendimento atencioso e entrega sempre no horário.”<cite>Cliente Kero Doces</cite></blockquote>
-        <blockquote class="card">“Melhor brigadeiro que já comi. Já virou tradição aqui em casa.”<cite>Cliente Kero Doces</cite></blockquote>
+    <!-- DEPOIMENTOS -->
+    <section class="depoimentos">
+      <p class="eyebrow reveal">Quem provou</p>
+      <div class="quotes">
+        <blockquote class="quote reveal">“Os doces estavam lindos e deliciosos. A festa toda elogiou!”<cite>Cliente Kero Doces</cite></blockquote>
+        <blockquote class="quote reveal">“Atendimento atencioso e entrega sempre no horário.”<cite>Cliente Kero Doces</cite></blockquote>
+        <blockquote class="quote reveal">“O melhor brigadeiro que já comi. Virou tradição aqui em casa.”<cite>Cliente Kero Doces</cite></blockquote>
       </div>
     </section>
 
-    <section id="contato" class="secao cta">
-      <h2>Bateu a vontade de doce?</h2>
-      <p>Faça sua encomenda agora e garanta a sua data.</p>
-      <a class="btn" data-whats="Olá! Vim pelo site e quero fazer um pedido.">Chamar no WhatsApp</a>
-      <a class="btn btn-contorno" href="https://www.instagram.com/kerodocesrj" target="_blank" rel="noopener">@kerodocesrj no Instagram</a>
+    <!-- CTA -->
+    <section id="contato" class="cta">
+      <div class="orb orb-4"></div>
+      <h2 class="split">Bateu a vontade de doce?</h2>
+      <p class="lead">Garanta sua data. As encomendas são limitadas para manter a qualidade artesanal.</p>
+      <div class="acoes center">
+        <a class="btn magnetic" data-whats="Olá! Vim pelo site e quero fazer um pedido.">Chamar no WhatsApp</a>
+        <a class="btn btn-ghost magnetic" href="https://www.instagram.com/kerodocesrj" target="_blank" rel="noopener">@kerodocesrj</a>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>© <span id="ano"></span> Kero Doces RJ · Rio de Janeiro</p>
+    <span>© <span id="ano"></span> Kero Doces RJ</span>
+    <span>Rio de Janeiro · feito com açúcar e afeto</span>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
